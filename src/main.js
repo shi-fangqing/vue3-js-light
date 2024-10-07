@@ -29,6 +29,7 @@ app.config.globalProperties.$request = request
 app.use(ElementPlus, {
     locale: zhCn,
 })
+//
 app.use(globalComponent)
 app.use(ContextMenu)
 app.use(pinia)
