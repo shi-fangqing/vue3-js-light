@@ -1,0 +1,31 @@
+{
+  "name": "vue3-js-light",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "mock": "vite --open --mode mock",
+    "mock:build": "vite build --mode mock",
+    "dev": "vite --open --mode dev",
+    "build": "vite build --mode prod",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@element-plus/icons-vue": "2.3.1",
+    "@imengyu/vue3-context-menu": "1.4.2",
+    "@vueuse/core": "11.1.0",
+    "axios": "1.7.7",
+    "element-plus": "2.7.6",
+    "mockjs2": "^1.0.8",
+    "pinia": "2.2.2",
+    "use-element-plus-theme": "0.0.5",
+    "vue": "3.4.29",
+    "vue-cropper": "1.1.1",
+    "vue-router": "4"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "5.0.5",
+    "sass": "1.77.6",
+    "vite": "5.3.1"
+  }
+}
