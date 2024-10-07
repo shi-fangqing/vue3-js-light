@@ -23,6 +23,7 @@ const app = createApp(App)
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
     app.component(key, component)
 }
+
 app.config.globalProperties.$route = useRoute()
 app.config.globalProperties.$router = useRouter()
 app.config.globalProperties.$request = request
