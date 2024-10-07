@@ -1,1 +1,0 @@
-import{g as n,e as o,o as a,h as r,l as e,i as s,w as c}from"./index-B4PL3RzM.js";const m={__name:"index",setup(_){return n(),(l,p)=>{const t=o("el-button");return a(),r("div",null,[e(" user "),s(t,{ref:"btn",type:"primary"},{default:c(()=>[e("首页")]),_:1},512)])}}};export{m as default};
