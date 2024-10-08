@@ -14,10 +14,7 @@ function isPrime(num) {
 </script>
 
 <template>
-  <el-collapse>
-    <el-collapse-item>
-    </el-collapse-item>
-  </el-collapse>
+  <el-image src="https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif"></el-image>
 </template>
 
 <style lang="scss" scoped>

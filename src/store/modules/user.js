@@ -16,6 +16,16 @@ export const useUserStore = defineStore('userStore', () => {
         localStorage.setItem('userInfo', JSON.stringify(userInfo.value))
     }
 
+    function clearToken() {
+        token.value = ''
+        localStorage.removeItem('token')
+    }
+
+    function clearUserInfo() {
+        userInfo.value = {}
+        localStorage.removeItem('userInfo')
+    }
+
     async function reqGetUserInfo() {
         const {data} = await reqUserInfo()
         setUserInfo(data)
@@ -27,9 +37,9 @@ export const useUserStore = defineStore('userStore', () => {
     }
 
     async function logout() {
-        setToken('')
-        setUserInfo({})
+        clearToken();
+        clearUserInfo();
     }
 
-    return {token, userInfo, setToken, setUserInfo, reqGetUserInfo, login, logout}
+    return {token, userInfo, setToken, setUserInfo, clearToken, clearUserInfo, reqGetUserInfo, login, logout}
 })

@@ -1,4 +1,4 @@
-import {createRouter, createWebHashHistory, createWebHistory} from 'vue-router'
+import {createRouter, createWebHashHistory, createWebHistory, useRoute} from 'vue-router'
 import {constantRoutes} from '@/router/routes/index.js'
 import {useRoutesStore} from '@/store/modules/routes.js'
 import {useUserStore} from '@/store/modules/user.js'
@@ -19,7 +19,11 @@ router.beforeEach(async (to, from, next) => {
     if (userStore?.token) {
         if (userStore.userInfo?.username) {
             if (routesStore.routes && routesStore.routes.length > 0) {
-                next()
+                if (to.path === Constants.Login_Path){
+                    next({path:to.query.redirect || Constants.Index_Path})
+                }else {
+                    next()
+                }
             } else {
                 await routesStore.reqGetRoutes()
                 next({...to, replace: true})

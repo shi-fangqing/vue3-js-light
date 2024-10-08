@@ -22,6 +22,7 @@ request.interceptors.request.use(
 
 request.interceptors.response.use(
     async response => {
+        const userStore=useUserStore()
         switch (response.data.code) {
             case 200:
                 return response.data
@@ -33,6 +34,8 @@ request.interceptors.response.use(
                         type: 'warning'
                     })
                     await router.push({path:Constants.Login_Path})
+                    userStore.clearToken()
+                    userStore.clearUserInfo()
                 } catch {
                     ElMessage.info({message: '已取消', duration: 1500})
                 }
@@ -44,6 +47,7 @@ request.interceptors.response.use(
     },
     async error => {
         if (error && error.response) {
+            const userStore=useUserStore()
             let message = '系统繁忙，请稍后...'
             switch (error.response.status) {
                 case 401:
@@ -54,7 +58,9 @@ request.interceptors.response.use(
                             cancelButtonText: '取消',
                             type: 'warning'
                         })
-                        location.href = Constants.Login_Path
+                        await router.push({path:Constants.Login_Path})
+                        userStore.clearToken()
+                        userStore.clearUserInfo()
                     } catch {
                         ElMessage.info({message: '已取消', duration: 1500})
                     }

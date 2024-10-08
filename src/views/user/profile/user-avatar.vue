@@ -1,39 +1,42 @@
 <script setup>
 import "vue-cropper/dist/index.css";
 import {VueCropper} from 'vue-cropper'
-// import { uploadAvatar } from "@/api/system/user";
 import {useUserStore} from "@/store/modules/user";
-import {getCurrentInstance, reactive, ref} from "vue";
+import {reactive, ref} from "vue";
 import {ElMessage} from "element-plus";
 import {useDebounceFn} from "@vueuse/core";
+import {getFileName} from "@/util/file.js";
+import {reqUploadFile} from "@/api/file.js";
+import {reqUpdateProfile} from "@/api/profile.js";
+import defaultAvatar from '/public/default_avatar.jpg'
 
 const userStore = useUserStore();
-const {proxy} = getCurrentInstance();
-
 const open = ref(false);
 const visible = ref(false);
 const title = ref("修改头像");
-
+const cropperRef = ref()
 //图片裁剪数据
 const options = reactive({
-  img: userStore.userInfo.avatar,     // 裁剪图片的地址
+  img: userStore.userInfo.avatar || defaultAvatar,     // 裁剪图片的地址
   autoCrop: true,            // 是否默认生成截图框
   autoCropWidth: 200,        // 默认生成截图框宽度
   autoCropHeight: 200,       // 默认生成截图框高度
   fixedBox: true,            // 固定截图框大小 不允许改变
-  outputType: "png",         // 默认生成截图为PNG格式
-  filename: 'avatar',        // 文件名称
+  outputType: 'png',
+  filename: getFileName(userStore.userInfo.avatar || defaultAvatar),    // 文件名称
   previews: {}               //预览数据
 });
 
 /** 编辑头像 */
 function editCropper() {
-  open.value = true;
+  open.value = true
 }
 
 /** 打开弹出层结束时的回调 */
 function modalOpened() {
   visible.value = true;
+  options.img = userStore.userInfo.avatar || defaultAvatar
+  options.filename = getFileName(userStore.userInfo.avatar || defaultAvatar)
 }
 
 /** 覆盖默认上传行为 */
@@ -42,25 +45,24 @@ function requestUpload() {
 
 /** 向左旋转 */
 function rotateLeft() {
-  proxy.$refs.cropper.rotateLeft();
+  cropperRef.value.rotateLeft();
 }
 
 /** 向右旋转 */
 function rotateRight() {
-  proxy.$refs.cropper.rotateRight();
+  cropperRef.value.rotateRight();
 }
 
 /** 图片缩放 */
 function changeScale(num) {
   num = num || 1;
-  proxy.$refs.cropper.changeScale(num);
+  cropperRef.value.changeScale(num);
 }
 
 /** 上传预处理 */
 function beforeUpload(file) {
   if (file.type.indexOf("image/") == -1) {
-    ElMessage.error("文件格式错误，请上传图片类型,如：JPG，PNG后缀的文件。")
-    // proxy.$modal.msgError("文件格式错误，请上传图片类型,如：JPG，PNG后缀的文件。");
+    ElMessage.error("文件格式错误，请上传图片类型,如：JPG，PNG，JPEG，GIF后缀的文件。")
   } else {
     const reader = new FileReader();
     reader.readAsDataURL(file);
@@ -73,17 +75,19 @@ function beforeUpload(file) {
 
 /** 上传图片 */
 function uploadImg() {
-//   proxy.$refs.cropper.getCropBlob(data => {
-//     let formData = new FormData();
-//     formData.append("avatarfile", data, options.filename);
-//     uploadAvatar(formData).then(response => {
-//       open.value = false;
-//       options.img = import.meta.env.VITE_APP_BASE_API + response.imgUrl;
-//       userStore.avatar = options.img;
-//       ElMessage.success({message: '修改成功', duration: 1500})
-//       visible.value = false;
-//     });
-//   });
+  cropperRef.value.getCropBlob(data => {
+    const formData = new FormData();
+    formData.append("file", data, options.filename);
+    reqUploadFile(formData).then(response => {
+      options.img = response.data;
+      userStore.setUserInfo({avatar: options.img})
+      // 发起请求，更新头像
+      reqUpdateProfile({avatar: options.img})
+      ElMessage.success({message: '修改成功', duration: 1500})
+      open.value = false;
+      visible.value = false;
+    });
+  });
 }
 
 /** 实时预览 */
@@ -93,9 +97,11 @@ const realTime = useDebounceFn((data) => {
 
 /** 关闭窗口 */
 function closeDialog() {
-  options.img = userStore.userInfo.avatar;
-  options.visible = false;
+  options.previews = {}
+  visible.value = false;
+  open.value = false
 }
+
 </script>
 
 <template>
@@ -120,14 +126,14 @@ function closeDialog() {
     <el-row :gutter="30">
       <el-col :sm="12" style="height: 21.88rem">
         <vue-cropper
-            ref="cropper"
+            ref="cropperRef"
             :img="options.img"
             :info="true"
             :autoCrop="options.autoCrop"
             :autoCropWidth="options.autoCropWidth"
             :autoCropHeight="options.autoCropHeight"
             :fixedBox="options.fixedBox"
-            :outputType="options.outputType"
+            :output-type="options.outputType"
             @realTime="realTime"
             v-if="visible"
         />

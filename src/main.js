@@ -18,19 +18,19 @@ import {useRoute, useRouter} from "vue-router";
 import request from "@/util/request.js";
 import '@/mock/login.js'
 import '@/mock/routes.js'
+import '@/mock/file.js'
+import '@/mock/profile.js'
 
 const app = createApp(App)
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
     app.component(key, component)
 }
-
 app.config.globalProperties.$route = useRoute()
 app.config.globalProperties.$router = useRouter()
 app.config.globalProperties.$request = request
 app.use(ElementPlus, {
     locale: zhCn,
 })
-//
 app.use(globalComponent)
 app.use(ContextMenu)
 app.use(pinia)

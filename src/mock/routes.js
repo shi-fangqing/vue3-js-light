@@ -1,10 +1,13 @@
-import Mock from 'mockjs2'
+import Mock from "@/mock/index.js";
 
-Mock.mock('/mock/routes', 'get', () => {
-    return {
-        code: 200,
-        data: dynamicRoutes
-    }
+Mock.onGet('/mock/routes').reply(function (config) {
+    return [
+        200,
+        {
+            code: 200,
+            data: dynamicRoutes
+        }
+    ]
 })
 
 const dynamicRoutes = [
