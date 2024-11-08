@@ -73,12 +73,7 @@ const userStore = useUserStore()
       align-items: center;
       padding-bottom: 1.25rem;
       border-bottom: 0.06rem solid var(--el-border-color);
-
-      .img {
-        height: 6.25rem;
-        aspect-ratio: 1/1;
-        border-radius: 50%;
-      }
+      cursor: pointer;
     }
 
     .info-item {

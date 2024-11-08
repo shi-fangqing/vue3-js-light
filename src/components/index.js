@@ -4,13 +4,15 @@ import Pagination from '@/components/pagination/index.vue'
 import SearchToolbar from '@/components/search-toolbar/index.vue'
 import UseDarkSwitch from '@/components/use-dark-swtich/index.vue'
 import AutoUploadFile from '@/components/auto-upload-file/index.vue'
+import WuyuCropper from '@/components/wuyu-cropper/index.vue'
 const components = {
     Breadcrumb,
     FullScreen,
     Pagination,
     SearchToolbar,
     UseDarkSwitch,
-    AutoUploadFile
+    AutoUploadFile,
+    WuyuCropper
 }
 export default {
     install(app) {
