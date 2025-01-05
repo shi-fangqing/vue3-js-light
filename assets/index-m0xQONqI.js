@@ -1,0 +1,1 @@
+import{_ as e,o as c,d as o}from"./index-BJT6eF96.js";const t={},n={style:{height:"1000px","background-color":"#67c23a"}};function r(s,_){return c(),o("div",n,"xxx")}const d=e(t,[["render",r]]);export{d as default};
