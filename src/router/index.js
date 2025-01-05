@@ -6,8 +6,8 @@ import {useSettingStore} from "@/store/modules/setting.js";
 import {Constants} from "@/setting.js";
 
 const router = createRouter({
-    history: createWebHistory(),
-    // history:createWebHashHistory(),
+    // history: createWebHistory(),
+    history:createWebHashHistory(),
     routes: [...constantRoutes]
 })
 

@@ -11,6 +11,7 @@ export default defineConfig({
             '@': path.resolve(__dirname, './src')
         }
     },
+    base: '/vue3-js-light',
     server: {
         port: 8080,
         open: true,
