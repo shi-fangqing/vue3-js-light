@@ -1,0 +1,1 @@
+import{g as t,o as a,d as c,q as e,e as s,F as n}from"./index-DQ2b3T6J.js";const r={style:{"background-color":"#efefef"}},l=e("div",{style:{"background-color":"#67c23a",height:"30px"}},null,-1),i={__name:"index",setup(_){return(p,d)=>{const o=t("auto-upload-file");return a(),c(n,null,[e("div",r,[s(o,{accept:".mp4",maxSize:100,showTip:!0})]),l],64)}}};export{i as default};
